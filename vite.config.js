@@ -9,8 +9,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-     hmr: {
+    hmr: {
       overlay: false, // 👈 Tắt overlay lỗi
-    },
+    }
   },
-})
+});

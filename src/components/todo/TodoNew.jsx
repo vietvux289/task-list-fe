@@ -1,16 +1,36 @@
-import React from 'react'
+import React, { useState } from "react";
 
 const TodoNew = (props) => {
-  const { addNewTodo } = props;
-  addNewTodo();
-    return (
-      <div>
-        <div className="todo-new">
-          <input type="text" placeholder="Enter task..." />
-          <button>Add</button>
-        </div>
-      </div>
-    );
-}
+  const [valueInput, setValueInput] = useState("");
 
-export default TodoNew
+  const { addNewTodo } = props;
+
+  const handleAddClick = () => {
+    addNewTodo(valueInput);
+    setValueInput("")
+  };
+
+  const handleOnChange = (name) => {
+    setValueInput(name);
+  };
+
+  return (
+    <>
+      <div className="todo-new">
+        <input
+          type="text"
+          placeholder="Enter task..."
+          onChange={(event) => handleOnChange(event.target.value)}
+          value={valueInput}
+        />
+        <button style={{ cursor: "pointer" }} onClick={handleAddClick}>
+          Add
+        </button>
+      </div>
+
+      <div className="inputted-text">Text inputted: {valueInput}</div>
+    </>
+  );
+};
+
+export default TodoNew;
