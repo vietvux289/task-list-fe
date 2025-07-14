@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 const UserTable = () => {
   const [dataUsers, setDataUsers] = useState([]);
   useEffect(() => {
-    setDataUsers(res.data);
     loadUser();
   }, []);
+  
   const columns = [
     {
       title: "Id",
@@ -25,6 +25,7 @@ const UserTable = () => {
 
   const loadUser = async () => {
     const res = await fetchAllUserAPI();
+    setDataUsers(res.data);
   };
 
   return <Table columns={columns} dataSource={dataUsers} rowKey={"_id"} />;
