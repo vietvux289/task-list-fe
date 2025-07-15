@@ -3,17 +3,23 @@ import axios from "./axios.customize";
 const createUserAPI = (fullName, email, password, phone) => {
   const URL_BACKEND = "/api/v1/user";
   const data = {
-    fullName,
-    email,
-    password,
-    phone,
+    fullName: fullName,
+    email: email,
+    password: password,
+    phone: phone
   };
   return axios.post(URL_BACKEND, data);
 };
 
-const updateUserAPI = () => {};
-
-import React from 'react'
+const updateUserAPI = (_id, fullName, phone) => {
+  const URL_BACKEND = "/api/v1/user";
+  const data = {
+    _id: _id,
+    fullName: fullName,
+    phone: phone
+  };
+  return axios.put(URL_BACKEND, data);
+};
 
 const fetchAllUserAPI = () => {
   const URL_BACKEND = "/api/v1/user";

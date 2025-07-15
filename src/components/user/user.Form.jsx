@@ -1,46 +1,56 @@
-import { Button, Input, message, notification, Modal } from "antd";
+import { Button, Input, notification, Modal } from "antd";
 import { useState } from "react";
 import { createUserAPI } from "../../services/api.service";
 
-const UserForm = () => {
+const UserForm = (props) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { loadUser } = props;
 
   const handleSubmitBtn = async () => {
     const res = await createUserAPI(fullName, email, password, phone);
     if (res.data) {
       notification.success({
         message: "Create new user",
-        description: "Created user successfully!"
+        description: "Created user successfully!",
       });
-      setIsModalOpen(false)
-    } else 
+      resetAndCloseModal();
+      await loadUser();
+    } else
       notification.error({
         message: "Error create user",
         description: JSON.stringify(res.message),
       });
-    }
   };
 
+  const resetAndCloseModal = () => {
+    setIsModalOpen(false);
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setPhone("");
+    }
 
   return (
     <div className="user-form" style={{ margin: "10px 0" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h3>Table users</h3>
-        <Button type="primary" onClick={()=>setIsModalOpen(true)}>Create user</Button>
+        <h3 style={{ fontFamily: "Arial" }}>Table users</h3>
+        <Button type="primary" onClick={() => setIsModalOpen(true)}>
+          Create user
+        </Button>
       </div>
 
       <Modal
         title="Create new user"
         open={isModalOpen}
         onOk={() => handleSubmitBtn()}
-        onCancel={() => { setIsModalOpen(false) }}
+        onCancel={() => resetAndCloseModal()}
         maskClosable={false}
-        okText={"CREATE"}>
+        okText={"Create"}
+      >
         <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
           <div>
             <span>Username</span>
@@ -80,9 +90,8 @@ const UserForm = () => {
           </div>
         </div>
       </Modal>
-
-
     </div>
   );
 };
+
 export default UserForm;
