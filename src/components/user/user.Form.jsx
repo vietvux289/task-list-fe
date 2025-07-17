@@ -37,7 +37,7 @@ const UserForm = (props) => {
   return (
     <div className="user-form" style={{ margin: "10px 0" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h3 style={{ fontFamily: "Arial" }}>Table users</h3>
+        <h3 style={{ fontFamily: "Segoe UI" }}>Table users</h3>
         <Button type="primary" onClick={() => setIsModalOpen(true)}>
           Create user
         </Button>

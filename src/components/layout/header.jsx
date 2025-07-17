@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Menu } from "antd";
-import { HomeOutlined, ProductOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, ReadOutlined, UsergroupAddOutlined, } from "@ant-design/icons";
 import { useState } from "react";
 
 const Header = () => {
@@ -19,12 +19,12 @@ const items = [
   {
     label: <NavLink to="/users">Users</NavLink>,
     key: "users",
-    icon: <UserOutlined />,
+    icon: <UsergroupAddOutlined />,
   },
   {
     label: <NavLink to="/books">Books</NavLink>,
     key: "products",
-    icon: <ProductOutlined />,
+    icon: <ReadOutlined />,
   },
 ];
 

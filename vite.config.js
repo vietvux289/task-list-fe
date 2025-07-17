@@ -11,6 +11,9 @@ export default defineConfig({
     port: 3000,
     hmr: {
       overlay: false, // 👈 Tắt overlay lỗi
-    }
+    },
+  },
+  build: {
+    minify: false,
   },
 });

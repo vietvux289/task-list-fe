@@ -1,0 +1,48 @@
+.drawer-content {
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.drawer-content p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.user-avatar {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-avatar img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 15%;
+  box-shadow: 0 2px 8px rgba(70, 69, 69, 0.15);
+  margin: 10px 0 20px 0;
+}
+
+.ant-drawer-content-wrapper{
+    width: 20vw;
+}
+
+.not-exist{
+    padding: 16px;
+}
+
+.upload-label {
+  display: block;
+  width: fit-content;
+  padding: 5px 10px;
+  border: 1px #ccc solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-label:hover {
+  color: #3c89e8;
+  border-color: #3c89e8;
+}

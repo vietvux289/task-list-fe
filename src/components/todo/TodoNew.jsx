@@ -19,11 +19,12 @@ const TodoNew = (props) => {
       <div className="todo-new">
         <input
           type="text"
+          style={{ paddingInlineStart: "5px" }}
           placeholder="Enter task..."
           onChange={(event) => handleOnChange(event.target.value)}
           value={valueInput}
         />
-        <button style={{ cursor: "pointer" }} onClick={handleAddClick}>
+        <button style={{ cursor: "pointer", width: "45px" }} onClick={handleAddClick}>
           Add
         </button>
       </div>

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "./todo.css";
+import "../../styles/todo.css";
 import TodoNew from "./TodoNew";
 import TodoData from "./TodoData";
-import reactLogo from "../../assets/react.svg";
+// import reactLogo from "../../assets/react.svg";
+import tasklist from "../../assets/tasklist.png";
 
 const TodoApp = () => {
   const [todoList, setTodoList] = useState([]);
@@ -34,7 +35,7 @@ const TodoApp = () => {
         <TodoData todoList={todoList} deleteTodo={deleteTodo} />
       ) : (
         <div className="todo-image">
-          <img src={reactLogo} className="logo" alt="React logo" />
+          <img src={tasklist} className="logo" alt="Todo logo" />
         </div>
       )}
     </div>
@@ -42,4 +43,3 @@ const TodoApp = () => {
 };
 
 export default TodoApp;
-
