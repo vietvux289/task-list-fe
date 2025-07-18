@@ -1,4 +1,4 @@
-import { Link, useRouteError } from "react-router-dom";
+import { NavLink, useRouteError } from "react-router-dom";
 import { Button, Result } from "antd";
 import "../styles/page.error.css"
 
@@ -14,9 +14,9 @@ export default function ErrorPage() {
         subTitle={error.statusText || error.message}
         extra={
           <Button type="primary">
-            <Link to="/">
+            <NavLink to="/">
               <span>Back to homepage</span>
-            </Link>
+            </NavLink>
           </Button>
         }
       />

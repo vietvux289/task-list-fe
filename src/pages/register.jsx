@@ -1,5 +1,12 @@
-import { Button, Input, Form, notification, Row, Col } from "antd";
-import "../styles/register.css";
+import {
+  Button,
+  Input,
+  Form,
+  notification,
+  Row,
+  Col,
+  Card
+} from "antd";
 import { registerUserAPI } from "../services/api.service";
 import { useNavigate } from "react-router-dom";
 
@@ -29,106 +36,118 @@ const RegisterPage = () => {
   };
 
   return (
-    <Form
-      name="basic"
-      layout="vertical"
-      form={form}
-      onFinish={onFinish}
-      style={{ margin: "20px" }}
+    <div
+      style={{
+        backgroundColor: "#f7f9fc",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
     >
-      <h1
+      <Card
         style={{
-          fontFamily: "Segoe UI",
-          color: "#3c89e8",
-          margin: "50px",
-          textAlign: "center",
+          width: "100%",
+          maxWidth: 600,
+          borderRadius: 10,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         }}
       >
-        Register user
-      </h1>
+        <h1
+          style={{
+            fontFamily: "Segoe UI",
+            color: "#3c89e8",
+            margin: "30px",
+            textAlign: "center",
+          }}
+        >
+          Register user{" "}
+        </h1>
 
-      <Row justify={"center"}>
-        <Col xs={24} md={8}>
-          <Form.Item
-            label="Full name"
-            name="fullName"
-            rules={[
-              { required: true, message: "Please input your full name!" },
-            ]}
-          >
-            <Input />
+        <Form name="basic" layout="vertical" form={form} onFinish={onFinish}>
+          <Row gutter={[16, 16]} style={{ rowGap: "10px" }}>
+            <Col span={24}>
+              <Form.Item
+                label="Full name"
+                name="fullName"
+                rules={[
+                  { required: true, message: "Please input your full name!" },
+                ]}
+              >
+                <Input placeholder="Enter your full name" />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                  { type: "email", message: "The input is not valid E-mail!" },
+                ]}
+              >
+                <Input placeholder="you@example.com" />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                  {
+                    pattern:
+                      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/,
+                    message:
+                      "At least 8 characters, one uppercase letter, one number, and one special character.",
+                  },
+                ]}
+              >
+                <Input.Password placeholder="Create a secure password" />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Phone number"
+                name="phone"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your phone number!",
+                  },
+                  {
+                    pattern: /^0\d{9}$/,
+                    message: "Must start with 0 and contain 10 digits",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="0123456789"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Form.Item style={{ marginTop: 10 }}>
+            <Button type="primary" block onClick={() => form.submit()}>
+              Register
+            </Button>
           </Form.Item>
-        </Col>
-      </Row>
 
-      <Row justify={"center"}>
-        <Col xs={24} md={8}>
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              { required: true, message: "Please input your full name!" },
-              {
-                type: "email",
-                message: "The input is not valid E-mail!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row justify={"center"}>
-        <Col xs={24} md={8}>
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-              {
-                pattern:
-                  /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/,
-                message:
-                  "Password must be at least 8 characters, include a number, an uppercase letter, and a special character",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row justify={"center"}>
-        <Col xs={24} md={8}>
-          <Form.Item
-            label="Phone number"
-            name="phone"
-            rules={[
-              {
-                required: true,
-                message: "Please input your phone number!",
-              },
-              {
-                pattern: /^0\d{9}$/,
-                message: "Phone number must start with 0 and be 10 digits",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button type="primary" onClick={() => form.submit()}>
-          Register
-        </Button>
-      </div>
-    </Form>
+          <div style={{ textAlign: "right", marginTop: 10 }}>
+            <span
+              style={{ color: "#3c89e8", cursor: "pointer" }}
+              onClick={() => navigate("/")}
+            >
+              Back to homepage
+            </span>
+          </div>
+        </Form>
+      </Card>
+    </div>
   );
 };
 
