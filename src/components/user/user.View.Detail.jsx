@@ -70,7 +70,11 @@ const ViewUserDetail = (props) => {
   };
 
   return (
-    <Drawer title="User Detail" onClose={onClose} open={isDetailOpen}>
+    <Drawer
+      title="User Detail"
+      onClose={onClose}
+      open={isDetailOpen}
+    >
       {dataDetail ? (
         <div className="drawer-content">
           <p>User ID: {dataDetail?._id}</p>

@@ -1,4 +1,12 @@
 import axios from "axios";
+import nprogress from "nprogress";
+
+nprogress.configure({
+  showSpinner: false,
+  easing: "ease",
+  speed: 500,
+  trickleSpeed: 100,
+});
 
 const instance = axios.create({
   // baseURL: "http://localhost:8080"
@@ -8,6 +16,7 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
+    nprogress.start();
     // Attach access_token to Headers before request is sent
     if (typeof window !== undefined
       && window.localStorage
@@ -27,6 +36,7 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
   function (response) {
+    nprogress.done();
     // Any status code that lie within the range of 2xx cause this function to trigger
         // Customize response with response data
     if (response.data && response.data.data) {
@@ -35,6 +45,7 @@ instance.interceptors.response.use(
         return response;
   },
   function (error) {
+    nprogress.done();
     // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Customize error response with response error
       if (error.response && error.response.data) {

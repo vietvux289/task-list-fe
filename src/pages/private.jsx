@@ -11,16 +11,18 @@ const PrivateRoute = (props) => {
   }
 
   return (
-    <Result
-      status="403"
-      title="Unauthorized"
-      subTitle="Sorry, you are not authorized to access this page."
-      extra={
-        <NavLink to="/login">
-          <Button type="primary">Go to Login to access this page</Button>
-        </NavLink>
-      }
-    />
+    <div className="error-page">
+      <Result
+        status="403"
+        title="Unauthorized"
+        subTitle="Sorry, you are not authorized to access this page."
+        extra={
+          <NavLink to="/login">
+            <Button type="primary">Login to access this page</Button>
+          </NavLink>
+        }
+      />
+    </div>
   );
 };
 
