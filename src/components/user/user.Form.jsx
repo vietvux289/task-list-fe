@@ -32,7 +32,7 @@ const UserForm = (props) => {
     setEmail("");
     setPassword("");
     setPhone("");
-    }
+  };
 
   return (
     <div className="user-form" style={{ margin: "10px 0" }}>

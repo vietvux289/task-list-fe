@@ -3,7 +3,7 @@ import "../../styles/todo.css";
 import TodoNew from "./TodoNew";
 import TodoData from "./TodoData";
 // import reactLogo from "../../assets/react.svg";
-import tasklist from "../../assets/tasklist.png";
+import tasklist from "../../assets/tasklist.jpg";
 
 const TodoApp = () => {
   const [todoList, setTodoList] = useState([]);

@@ -8,7 +8,14 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
+    // Attach access_token to Headers before request is sent
+    if (typeof window !== undefined
+      && window.localStorage
+      && window.localStorage.getItem('access_token')
+    ) {
+      config.headers.Authorization =
+        "Bearer " + window.localStorage.getItem("access_token");
+    }
     return config;
   },
   function (error) {
@@ -21,7 +28,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
-        // Do something with response data
+        // Customize response with response data
     if (response.data && response.data.data) {
       response.data = response.data.data;
         }
@@ -29,7 +36,7 @@ instance.interceptors.response.use(
   },
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-      // Do something with response error
+      // Customize error response with response error
       if (error.response && error.response.data) {
           return error.response.data;
       }

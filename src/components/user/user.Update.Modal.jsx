@@ -7,13 +7,13 @@ const UpdateUserModal = (props) => {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
 
-    const {
-        isModalUpdateOpen,
-        setIsModalUpdateOpen,
-        dataUpdate,
-        setDataUpdate,
-        loadUser
-    } = props;
+  const {
+    isModalUpdateOpen,
+    setIsModalUpdateOpen,
+    dataUpdate,
+    setDataUpdate,
+    loadUser,
+  } = props;
 
   useEffect(() => {
     if (dataUpdate) {
@@ -28,10 +28,10 @@ const UpdateUserModal = (props) => {
     if (res.data) {
       notification.success({
         message: "Update user",
-        description:  `Updated user ${id} successfully!`,
+        description: `Updated user ${id} successfully!`,
       });
       resetAndCloseModal();
-        await loadUser();
+      await loadUser();
     } else
       notification.error({
         message: "Error update user",
@@ -59,10 +59,7 @@ const UpdateUserModal = (props) => {
       <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
         <div>
           <span>Id</span>
-          <Input
-            value={id}
-            disabled
-          />
+          <Input value={id} disabled />
         </div>
         <div>
           <span>Full name</span>

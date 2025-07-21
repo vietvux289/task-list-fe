@@ -13,7 +13,7 @@ const UserTable = (props) => {
     pageSize,
     total,
     setCurrent,
-    setPageSize
+    setPageSize,
   } = props;
 
   const [dataUpdate, setDataUpdate] = useState(null);
@@ -25,7 +25,7 @@ const UserTable = (props) => {
   const handleCancel = () => {
     notification.error({
       message: "Cancel delete user!",
-      duration: 0.8
+      duration: 0.8,
     });
   };
 
@@ -35,27 +35,23 @@ const UserTable = (props) => {
       notification.success({
         message: "Delete user successfully!",
         description: `You have deleted user ${id}!`,
-        duration: 1
-      })
+        duration: 1,
+      });
       await loadUser();
     } else {
       notification.error({
         message: "Failed to delete user!",
         description: JSON.stringify(res.message),
-        duration: 1
-      })
+        duration: 1,
+      });
     }
-  }
+  };
 
   const columns = [
     {
       title: "No",
       render: (_, record, index) => {
-        return (
-          <>
-            {(current - 1) * pageSize + (index + 1)} 
-          </>
-        );
+        return <>{(current - 1) * pageSize + (index + 1)}</>;
       },
     },
     {
@@ -126,7 +122,7 @@ const UserTable = (props) => {
         setPageSize(+pagination.pageSize);
       }
     }
-  }
+  };
 
   return (
     <>

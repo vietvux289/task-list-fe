@@ -124,26 +124,44 @@ const RegisterPage = () => {
                   },
                 ]}
               >
-                <Input
-                  placeholder="0123456789"
-                />
+                <Input placeholder="0123456789" />
               </Form.Item>
             </Col>
           </Row>
 
-          <Form.Item style={{ marginTop: 10 }}>
-            <Button type="primary" block onClick={() => form.submit()}>
-              Register
-            </Button>
-          </Form.Item>
+          <Row>
+            <Col span={24}>
+              <Form.Item style={{ marginBottom: 25 }}>
+                <Button type="primary" block onClick={() => form.submit()}>
+                  Register
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <div style={{ textAlign: "right", marginTop: 10 }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: 10,
+            }}
+          >
             <span
               style={{ color: "#3c89e8", cursor: "pointer" }}
               onClick={() => navigate("/")}
             >
               Back to homepage
             </span>
+
+            <p>
+              Have account.{" "}
+              <span
+                style={{ color: "#3c89e8", cursor: "pointer" }}
+                onClick={() => navigate("/")}
+              >
+                Login here
+              </span>
+            </p>
           </div>
         </Form>
       </Card>

@@ -1,5 +1,5 @@
-import { Drawer, Button, notification} from "antd";
-import '../../styles/user.detail.css'
+import { Drawer, Button, notification } from "antd";
+import "../../styles/user.detail.css";
 import { useState } from "react";
 import { handleUploadFile, updateUserAvatar } from "../../services/api.service";
 
@@ -21,22 +21,27 @@ const ViewUserDetail = (props) => {
       setSelectedFile(null);
       setPreview(null);
       return;
-    } 
+    }
 
     const file = event.target.files[0];
 
     if (file) {
-      setSelectedFile(file)
-      setPreview(URL.createObjectURL(file))
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
     }
-  }
-  
+  };
+
   const handleUpdateUserAvatar = async () => {
     const resUpload = await handleUploadFile(selectedFile, "avatar");
     if (resUpload.data) {
       const newAvatar = resUpload.data.fileUploaded;
-      const resUpdateAvatar = await updateUserAvatar(dataDetail._id, dataDetail.fullName, dataDetail.phone, newAvatar);
-      
+      const resUpdateAvatar = await updateUserAvatar(
+        dataDetail._id,
+        dataDetail.fullName,
+        dataDetail.phone,
+        newAvatar
+      );
+
       if (resUpdateAvatar.data) {
         setIsDetailOpen(false);
         setSelectedFile(null);
@@ -56,13 +61,13 @@ const ViewUserDetail = (props) => {
         });
       }
     } else {
-          notification.error({
-            message: "Failed to upload new avatar!",
-            description: JSON.stringify(resUpload.message),
-            duration: 0.8,
-          })
+      notification.error({
+        message: "Failed to upload new avatar!",
+        description: JSON.stringify(resUpload.message),
+        duration: 0.8,
+      });
     }
-  }
+  };
 
   return (
     <Drawer title="User Detail" onClose={onClose} open={isDetailOpen}>
@@ -97,10 +102,12 @@ const ViewUserDetail = (props) => {
 
           {preview && (
             <>
-            <div className="user-avatar">
-              <img src={preview} alt="updated_user_avatar" />
-            </div>
-            <Button type="primary" onClick={()=>handleUpdateUserAvatar()}>Save</Button>
+              <div className="user-avatar">
+                <img src={preview} alt="updated_user_avatar" />
+              </div>
+              <Button type="primary" onClick={() => handleUpdateUserAvatar()}>
+                Save
+              </Button>
             </>
           )}
         </div>

@@ -1,0 +1,14 @@
+.todo-new input {
+  padding: 8px 15px;
+  width: 250px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  outline: none;
+}
+
+.todo-new input:focus {
+  border-color: #40a9ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}

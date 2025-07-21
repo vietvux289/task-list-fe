@@ -1,5 +1,5 @@
-import { NavLink } from "react-router-dom";
-import { Menu } from "antd";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Menu, message } from "antd";
 import {
   HomeOutlined,
   ReadOutlined,
@@ -11,15 +11,34 @@ import {
 } from "@ant-design/icons";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
+import { logoutAPI } from "../../services/api.service";
 
 const Header = () => {
-  const { user } = useContext(AuthContext)
+  const { user, setUser } = useContext(AuthContext);
 
   const [current, setCurrent] = useState("home");
 
   const onClick = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
+  };
+
+  let navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    const res = await logoutAPI();
+    if (res.data) {
+      localStorage.removeItem("access_token");
+      setUser({
+        email: "",
+        phone: "",
+        fullName: "",
+        role: "",
+        avatar: "",
+        id: "",
+      });
+      message.success("Logged out!");
+      navigate("/");
+    }
   };
 
   const menuItems = [
@@ -40,7 +59,7 @@ const Header = () => {
     },
     {
       key: "spacer",
-      label: "", // khoảng trắng ngăn cách 2 bên
+      label: "",
       disabled: true,
       style: { flexGrow: 1, cursor: "default" },
     },
@@ -54,7 +73,7 @@ const Header = () => {
             {
               key: "logout",
               icon: <LogoutOutlined />,
-              label: <NavLink to="/">Logout</NavLink>,
+              label: <span onClick={() => handleLogOut()}>Logout</span>,
             },
           ],
         }
@@ -75,7 +94,6 @@ const Header = () => {
           ],
         },
   ];
-
 
   return (
     <Menu

@@ -1,10 +1,9 @@
 import { NavLink, useRouteError } from "react-router-dom";
 import { Button, Result } from "antd";
-import "../styles/page.error.css"
+import "../styles/page.error.css";
 
 export default function ErrorPage() {
   const error = useRouteError();
-  console.error(error);
 
   return (
     <div className="error-page">

@@ -13,11 +13,10 @@ const createUserAPI = (fullName, email, password, phone) => {
     fullName: fullName,
     email: email,
     password: password,
-    phone: phone
+    phone: phone,
   };
   return axios.post(URL_BACKEND, data);
 };
-
 
 // Update an user
 const updateUserAPI = (_id, fullName, phone) => {
@@ -25,7 +24,7 @@ const updateUserAPI = (_id, fullName, phone) => {
   const data = {
     _id: _id,
     fullName: fullName,
-    phone: phone
+    phone: phone,
   };
   return axios.put(URL_BACKEND, data);
 };
@@ -33,9 +32,8 @@ const updateUserAPI = (_id, fullName, phone) => {
 // Delete an user
 const deleteUser = (id) => {
   const URL_BACKEND = `/api/v1/user/${id}`;
-  return axios.delete(URL_BACKEND)
-}
-
+  return axios.delete(URL_BACKEND);
+};
 
 // Upload file
 const handleUploadFile = (file, folder) => {
@@ -43,16 +41,16 @@ const handleUploadFile = (file, folder) => {
   let config = {
     headers: {
       "upload-type": folder,
-      "Content-Type": "multipart/form-data"
-    }
-  }
+      "Content-Type": "multipart/form-data",
+    },
+  };
 
   const bodyFormData = new FormData();
-  bodyFormData.append("fileImg", file)
+  bodyFormData.append("fileImg", file);
 
-  return axios.post(URL_BACKEND, bodyFormData, config); 
-}
-  
+  return axios.post(URL_BACKEND, bodyFormData, config);
+};
+
 // Update user with new avatar
 const updateUserAvatar = (_id, fullName, phone, avatar) => {
   const URL_BACKEND = "/api/v1/user";
@@ -60,11 +58,10 @@ const updateUserAvatar = (_id, fullName, phone, avatar) => {
     _id: _id,
     fullName: fullName,
     phone: phone,
-    avatar: avatar
+    avatar: avatar,
   };
   return axios.put(URL_BACKEND, data);
 };
-
 
 // Register new user
 const registerUserAPI = (fullName, email, password, phone) => {
@@ -73,7 +70,7 @@ const registerUserAPI = (fullName, email, password, phone) => {
     fullName: fullName,
     email: email,
     password: password,
-    phone: phone
+    phone: phone,
   };
   return axios.post(URL_BACKEND, data);
 };
@@ -84,10 +81,22 @@ const loginUserAPI = (email, password) => {
   const data = {
     username: email,
     password: password,
-    delay: 2000
-  }
-  return axios.post(URL_BACKEND, data)
-}
+    delay: 1000,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
+// Get user
+const getUserAPI = () => {
+  const URL_BACKEND = "api/v1/auth/account";
+  return axios.get(URL_BACKEND);
+};
+
+// Logout user
+const logoutAPI = () => {
+  const URL_BACKEND = "api/v1/auth/logout";
+  return axios.post(URL_BACKEND);
+};
 
 export {
   fetchAllUserAPI,
@@ -97,5 +106,7 @@ export {
   handleUploadFile,
   updateUserAvatar,
   registerUserAPI,
-  loginUserAPI
+  loginUserAPI,
+  getUserAPI,
+  logoutAPI,
 };
