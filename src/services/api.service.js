@@ -98,6 +98,25 @@ const logoutAPI = () => {
   return axios.post(URL_BACKEND);
 };
 
+// Get all books
+const fetchAllBookAPI = (current, pageSize) => {
+  const URL_BACKEND = `/api/v1/book?current=${current}&pageSize=${pageSize}`;
+  return axios.get(URL_BACKEND);
+};
+
+// Create new book
+const createBookAPI = (mainText, author, price, quantity, category) => {
+  const URL_BACKEND = "/api/v1/book";
+  const data = {
+    mainText: mainText,
+    author: author,
+    price: price,
+    quantity: quantity,
+    category: category,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
 export {
   fetchAllUserAPI,
   createUserAPI,
@@ -109,4 +128,6 @@ export {
   loginUserAPI,
   getUserAPI,
   logoutAPI,
+  fetchAllBookAPI,
+  createBookAPI,
 };

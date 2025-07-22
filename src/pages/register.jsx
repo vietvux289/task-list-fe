@@ -157,9 +157,9 @@ const RegisterPage = () => {
               Have account.{" "}
               <span
                 style={{ color: "#3c89e8", cursor: "pointer" }}
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/login")}
               >
-                Login here
+                Login
               </span>
             </p>
           </div>
