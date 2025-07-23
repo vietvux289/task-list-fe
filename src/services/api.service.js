@@ -105,7 +105,7 @@ const fetchAllBookAPI = (current, pageSize) => {
 };
 
 // Create new book
-const createBookAPI = (mainText, author, price, quantity, category) => {
+const createBookAPI = (mainText, author, price, quantity, category, thumbnail) => {
   const URL_BACKEND = "/api/v1/book";
   const data = {
     mainText: mainText,
@@ -113,10 +113,15 @@ const createBookAPI = (mainText, author, price, quantity, category) => {
     price: price,
     quantity: quantity,
     category: category,
+    thumbnail: thumbnail,
   };
   return axios.post(URL_BACKEND, data);
 };
 
+const deleteBook = (id) => {
+  const URL_BACKEND = `/api/v1/book/${id}`;
+  return axios.delete(URL_BACKEND);
+}
 export {
   fetchAllUserAPI,
   createUserAPI,
@@ -130,4 +135,5 @@ export {
   logoutAPI,
   fetchAllBookAPI,
   createBookAPI,
+  deleteBook
 };

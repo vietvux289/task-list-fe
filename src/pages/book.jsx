@@ -1,13 +1,17 @@
 import { fetchAllBookAPI } from "../services/api.service";
 import { useEffect, useState } from "react";
 import BookTable from "../components/book/book.Table";
-// import BookForm from "../components/book/book.Form";
+// import BookFormControlled from "../components/book/book.Form.Controlled";
+import BookFormUnControlled from "../components/book/book.Form.Uncontrolled";
 
 function BookPage() {
   const [dataBooks, setDataBooks] = useState([]);
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [total, setTotal] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dataForm, setDataForm] = useState(null);
+
 
   useEffect(() => {
     loadBook();
@@ -33,8 +37,23 @@ function BookPage() {
         total={total}
         setCurrent={setCurrent}
         setPageSize={setPageSize}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
       />
-      {/* <BookForm loadBook={loadBook} /> */}
+
+      {/* <BookFormControlled
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        loadBook={loadBook}
+      /> */}
+
+      <BookFormUnControlled
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        loadBook={loadBook}
+        dataForm={dataForm}
+        setDataForm={setDataForm}
+      />
     </div>
   );
 }

@@ -2,9 +2,8 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Table, Popconfirm, notification, Button } from "antd";
 import { useState } from "react";
 import ViewBookDetail from "./book.View.Detail";
-import BookForm from "./book.Form";
+import { deleteBook } from "../../services/api.service";
 // import UpdateUserModal from "./user.Update.Modal";
-// import { deleteUser } from "../../services/api.service";
 
 const BookTable = (props) => {
   const {
@@ -15,11 +14,12 @@ const BookTable = (props) => {
     setCurrent,
     setPageSize,
     loadBook,
+    isModalOpen,
+    setIsModalOpen,
   } = props;
 
   const [dataDetail, setDataDetail] = useState(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [dataUpdate, setDataUpdate] = useState(null);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
@@ -32,7 +32,7 @@ const BookTable = (props) => {
   };
 
   const handleConfirmDelete = async (id) => {
-    const res = await deleteUser(id);
+    const res = await deleteBook(id);
     if (res.data) {
       notification.success({
         message: "Delete book!",
@@ -60,7 +60,6 @@ const BookTable = (props) => {
       title: "Id",
       dataIndex: "_id",
       render: (_, record) => {
-        console.log(record);
         return (
           <a
             href="#"
@@ -149,9 +148,9 @@ const BookTable = (props) => {
           marginBottom: 10,
         }}
       >
-        <h3 style={{ fontFamily: "Segoe UI" }}>Table users</h3>
+        <h3 style={{ fontFamily: "Segoe UI" }}>Table books</h3>
         <Button type="primary" onClick={() => setIsModalOpen(true)}>
-          Create user
+          Create book
         </Button>
       </div>
 
@@ -184,10 +183,8 @@ const BookTable = (props) => {
         setDataDetail={setDataDetail}
         isDetailOpen={isDetailOpen}
         setIsDetailOpen={setIsDetailOpen}
-        loadUser={loadBook}
+        loadBook={loadBook}
       />
-
-      <BookForm isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 
       {/* <UpdateUserModal
         isModalUpdateOpen={isModalUpdateOpen}

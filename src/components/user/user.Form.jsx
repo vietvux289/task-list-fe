@@ -19,11 +19,12 @@ const UserForm = (props) => {
       });
       resetAndCloseModal();
       await loadUser();
-    } else
+    } else {
       notification.error({
         message: "Error create user",
         description: JSON.stringify(res.message),
       });
+    }
   };
 
   const resetAndCloseModal = () => {

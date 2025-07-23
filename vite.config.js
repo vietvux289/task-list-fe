@@ -16,4 +16,7 @@ export default defineConfig({
   build: {
     minify: false,
   },
+  name: "passive-event-fix",
+  configureServer(server) {
+  },
 });

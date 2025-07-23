@@ -1,7 +1,7 @@
 import { Drawer } from "antd";
 
 const ViewBookDetail = (props) => {
-    const { dataDetail, setDataDetail, isDetailOpen, setIsDetailOpen, loadBook } = props;
+    const { dataDetail, setDataDetail, isDetailOpen, setIsDetailOpen } = props;
     const onClose = () => {
       setIsDetailOpen(false);
       setDataDetail(null);
@@ -35,7 +35,7 @@ const ViewBookDetail = (props) => {
 
           <p>Thumbnail:</p>
 
-          <div className="user-avatar">
+          <div className="thumbnail">
             <img
               src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
                 dataDetail.thumbnail

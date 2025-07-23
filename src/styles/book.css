@@ -1,0 +1,14 @@
+.thumbnail {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.thumbnail img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 15%;
+  box-shadow: 0 2px 8px rgba(70, 69, 69, 0.15);
+  margin: 10px 0 20px 0;
+}

@@ -62,7 +62,7 @@ const LoginPage = () => {
             </h1>
             <Form
               form={form}
-              name="normal_login"
+              name="form_login"
               className="login-form"
               initialValues={{ remember: true }}
               onFinish={onFinish}

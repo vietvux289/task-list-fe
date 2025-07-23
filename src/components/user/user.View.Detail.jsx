@@ -23,8 +23,7 @@ const ViewUserDetail = (props) => {
       return;
     }
 
-    const file = event.target.files[0];
-
+    let file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
       setPreview(URL.createObjectURL(file));
@@ -116,7 +115,7 @@ const ViewUserDetail = (props) => {
           )}
         </div>
       ) : (
-        <p className="not-exist">Not exist data</p>
+        <p className="not-exist">Not exist new avatar</p>
       )}
     </Drawer>
   );
