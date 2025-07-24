@@ -1,69 +1,77 @@
-import { useState } from "react";
-import { Input, notification, Modal, Select, InputNumber } from "antd";
-import { createBookAPI, handleUploadFile } from "../../services/api.service";
+import { useEffect, useState } from "react";
+import { Input, notification, Modal, Select, InputNumber, message } from "antd";
+import { handleUploadFile, updateBookAPI } from "../../services/api.service";
 import "../../styles/book.css";
 
-const BookFormControlled = (props) => {
-  const [bookName, setBookName] = useState("");
+const UpdateBookControlled = (props) => {
+  const [id, setId] = useState("")
+  const [mainText, setMainText] = useState("");
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [category, setCategory] = useState("");
+  const [thumbnail, setThumbnail] = useState("")
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  const { isModalOpen, setIsModalOpen, loadBook } = props;
-
+  const { isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, setDataUpdate, loadBook } = props;
+  useEffect(() => {
+    const imgPreview = `${import.meta.env.VITE_BACKEND_URL}/images/book/${dataUpdate?.thumbnail}`;
+    if (dataUpdate) {
+      setId(dataUpdate._id);
+      setMainText(dataUpdate.mainText);
+      setAuthor(dataUpdate.author);
+      setPrice(dataUpdate.price);
+      setQuantity(dataUpdate.quantity);
+      setCategory(dataUpdate.category);
+      setPreview(imgPreview);
+    }
+  }, [dataUpdate]);
   const handleSubmitBtn = async () => {
-    if (!selectedFile) {
-      notification.error({
-        message: "Failed to create book",
-        description: "Please upload thumbnail picture!",
+    const uploadImg = await handleUploadFile(selectedFile, "book");
+    if (uploadImg.data) {
+      let newThumbnail = uploadImg.data.fileUploaded;
+      const res = await updateBookAPI({
+        _id: id,
+        mainText,
+        author,
+        price,
+        quantity,
+        category,
+        thumbnail: newThumbnail,
       });
-      return;
-    }
-
-    const resUpload = await handleUploadFile(selectedFile, "book");
-    if (!resUpload.data) {
-      notification.error({
-        message: "Failed to upload thumbnail",
-        description: JSON.stringify(resUpload.message),
-      });
-    }
-    const fileUploaded = resUpload.data.fileUploaded;
-    const res = await createBookAPI(
-      bookName,
-      author,
-      +price,
-      +quantity,
-      category,
-      fileUploaded
-    );
-    if (res.data) {
-      notification.success({
-        message: "Create book",
-        description: "Created new successfully!",
-        duration: 0.5,
-      });
-      resetAndCloseModal();
-      await loadBook();
+      if (res.data) {
+        notification.success({
+          message: "Updated book!",
+          description: `You have updated book ${mainText}!`,
+        });
+        await loadBook();
+        resetAndCloseModal();
+      } else {
+        notification.error({
+          message: "Failed to update book!",
+          description: JSON.stringify(res.message),
+        });
+      }
     } else {
       notification.error({
-        message: "Error create book",
-        description: JSON.stringify(res.message),
-      });
+        message: "Failed to update!",
+        description: JSON.stringify(uploadImg.message)
+      })
     }
   };
 
   const resetAndCloseModal = () => {
-    setIsModalOpen(false);
+    setIsModalUpdateOpen(false);
     setBookName("");
     setAuthor("");
     setPrice("");
     setQuantity("");
     setCategory(null);
     setSelectedFile(null);
+    setThumbnail("")
     setPreview(null);
+    setDataUpdate(null)
   };
 
   const handleOnChangeFile = (event) => {
@@ -85,21 +93,25 @@ const BookFormControlled = (props) => {
 
   return (
     <Modal
-      title="Create new book"
-      open={isModalOpen}
+      title="Update book"
+      open={isModalUpdateOpen}
       onOk={() => handleSubmitBtn()}
       onCancel={() => resetAndCloseModal()}
       maskClosable={false}
-      okText={"Create"}
+      okText={"Update"}
     >
       <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
+        <div>
+          <span>Id</span>
+          <Input value={id} disabled />
+        </div>
         <div>
           <span>Book Name</span>
           <Input
             required
-            value={bookName}
+            value={mainText}
             onChange={(event) => {
-              setBookName(event.target.value);
+              setMainText(event.target.value);
             }}
           />
         </div>
@@ -181,4 +193,4 @@ const BookFormControlled = (props) => {
     </Modal>
   );
 };
-export default BookFormControlled;
+export default UpdateBookControlled;

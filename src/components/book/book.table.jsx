@@ -3,7 +3,8 @@ import { Table, Popconfirm, notification, Button } from "antd";
 import { useState } from "react";
 import ViewBookDetail from "./book.View.Detail";
 import { deleteBook } from "../../services/api.service";
-// import UpdateUserModal from "./user.Update.Modal";
+import UpdateBookControlled from "./book.Update.Controlled";
+import BookUpdateUnControlled from "./book.Update.Uncontrolled";
 
 const BookTable = (props) => {
   const {
@@ -14,7 +15,6 @@ const BookTable = (props) => {
     setCurrent,
     setPageSize,
     loadBook,
-    isModalOpen,
     setIsModalOpen,
   } = props;
 
@@ -186,13 +186,13 @@ const BookTable = (props) => {
         loadBook={loadBook}
       />
 
-      {/* <UpdateUserModal
+      <BookUpdateUnControlled
         isModalUpdateOpen={isModalUpdateOpen}
         setIsModalUpdateOpen={setIsModalUpdateOpen}
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
-        loadUser={loadUser}
-      /> */}
+        loadBook={loadBook}
+      />
     </>
   );
 };

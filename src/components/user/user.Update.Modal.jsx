@@ -30,8 +30,8 @@ const UpdateUserModal = (props) => {
         message: "Update user",
         description: `Updated user ${id} successfully!`,
       });
-      resetAndCloseModal();
       await loadUser();
+      resetAndCloseModal();
     } else
       notification.error({
         message: "Error update user",

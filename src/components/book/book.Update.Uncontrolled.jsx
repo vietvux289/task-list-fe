@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input, notification, Modal, Select, InputNumber, Form } from "antd";
-import { createBookAPI, handleUploadFile } from "../../services/api.service";
+import { updateBookAPI, handleUploadFile } from "../../services/api.service";
 import "../../styles/book.css";
 
-const BookFormUnControlled = (props) => {
+const BookUpdateUnControlled = (props) => {
   const [form] = Form.useForm();
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const { isModalOpen, setIsModalOpen, loadBook } = props;
+  const { dataUpdate, setDataUpdate, isModalUpdateOpen, setIsModalUpdateOpen, loadBook } = props;
 
+    useEffect(() => {
+     const imgPreview = `${import.meta.env.VITE_BACKEND_URL}/images/book/${dataUpdate?.thumbnail}`;
+        if (dataUpdate) {
+            form.setFieldsValue({ ...dataUpdate }), setPreview(imgPreview);
+
+      }
+    },
+            [dataUpdate]
+    )
   const onFinish = async (values) => {
     if (!selectedFile) {
       notification.error({
@@ -22,14 +31,14 @@ const BookFormUnControlled = (props) => {
 
     if (resUpload.data) {
       const thumbnail = resUpload.data.fileUploaded;
-      const resCreate = await createBookAPI({ ...values, thumbnail });
+      const resCreate = await updateBookAPI({ ...values, thumbnail });
       if (resCreate.data) {
         notification.success({
-          message: "Create book successfully!",
-          description: `You have created book ${values.mainText}!`,
+          message: "Update book successfully!",
+          description: `You have updated book ${values.mainText}!`,
         });
-        resetAndCloseModal();
         await loadBook();
+        resetAndCloseModal();
       } else {
         notification.error({
           message: "Failed create book",
@@ -45,9 +54,10 @@ const BookFormUnControlled = (props) => {
   };
 
   const resetAndCloseModal = () => {
-    setIsModalOpen(false);
+    setIsModalUpdateOpen(false);
     setSelectedFile(null);
-    setPreview(null);
+      setPreview(null);
+      setDataUpdate(null);
     form.resetFields();
   };
 
@@ -65,15 +75,14 @@ const BookFormUnControlled = (props) => {
     }
   };
 
-
   return (
     <Modal
       title="Create new book"
-      open={isModalOpen}
+      open={isModalUpdateOpen}
       onOk={() => form.submit()}
       onCancel={() => resetAndCloseModal()}
       maskClosable={false}
-      okText={"Create"}
+    okText={"Update"}
     >
       <Form
         form={form}
@@ -82,6 +91,12 @@ const BookFormUnControlled = (props) => {
         onFinish={onFinish}
         layout="vertical"
       >
+        <Form.Item
+          name="_id"
+          label="Id"
+        >
+          <Input disabled />
+        </Form.Item>
         <Form.Item
           name="mainText"
           label="Book Name"
@@ -181,4 +196,4 @@ const BookFormUnControlled = (props) => {
     </Modal>
   );
 };
-export default BookFormUnControlled;
+export default BookUpdateUnControlled;

@@ -5,29 +5,27 @@ import { Outlet } from "react-router-dom";
 import { getUserAPI } from "./services/api.service";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./components/context/auth.context";
-import { Spin } from "antd";
+import { message, Spin } from "antd";
 
 const App = () => {
   const { setUser, isAppLoading, setIsAppLoading } = useContext(AuthContext);
 
-useEffect(() => {
-  const fetchUser = async () => {
-    try {
-      const res = await getUserAPI();
-      if (res.data) {
-        setUser(res.data.user);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await getUserAPI();
+        if (res.data) {
+          setUser(res.data.user);
+        }
+      } catch (error) {
+        message.error("Error fetching user:", error);
+      } finally {
+        setIsAppLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    } finally {
-      setIsAppLoading(false);
-    }
-  };
-
-  fetchUser();
-}, []);
-
-
+    };
+    fetchUser();
+  }, []);
+  
 
   return (
     <>
