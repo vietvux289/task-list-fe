@@ -4,8 +4,8 @@ import nprogress from "nprogress";
 nprogress.configure({
   showSpinner: false,
   easing: "ease",
-  speed: 500,
-  trickleSpeed: 100,
+  speed: 150,
+  trickleSpeed: 150,
 });
 
 const instance = axios.create({
@@ -36,7 +36,8 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
   function (response) {
-    nprogress.done();
+      nprogress.done(); 
+
     // Any status code that lie within the range of 2xx cause this function to trigger
         // Customize response with response data
     if (response.data && response.data.data) {

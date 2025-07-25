@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Menu, message } from "antd";
 import {
   HomeOutlined,
@@ -9,15 +9,27 @@ import {
   UserAddOutlined,
   IdcardOutlined,
 } from "@ant-design/icons";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect  } from "react";
 import { AuthContext } from "../context/auth.context";
 import { logoutAPI } from "../../services/api.service";
 
 const Header = () => {
   const { user, setUser } = useContext(AuthContext);
+  const location = useLocation();
+  const allRoutes = ["users", "books"];
+  const checkCurrentRoute = (pathname) => {
+    const currentRoute = allRoutes.find((route) => `/${route}` === pathname);
+    return currentRoute || "home";
+  };
 
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState(() =>
+    checkCurrentRoute(location.pathname)
+  );
 
+  useEffect(() => {
+    setCurrent(checkCurrentRoute(location.pathname));
+  }, [location.pathname]);
+  
   const onClick = (e) => {
     setCurrent(e.key);
   };
@@ -53,7 +65,7 @@ const Header = () => {
       label: <NavLink to="/users">Users</NavLink>,
     },
     {
-      key: "products",
+      key: "books",
       icon: <ReadOutlined />,
       label: <NavLink to="/books">Books</NavLink>,
     },

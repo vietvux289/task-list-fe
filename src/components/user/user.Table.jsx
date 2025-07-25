@@ -14,6 +14,7 @@ const UserTable = (props) => {
     total,
     setCurrent,
     setPageSize,
+    loading
   } = props;
 
   const [dataUpdate, setDataUpdate] = useState(null);
@@ -129,6 +130,7 @@ const UserTable = (props) => {
       <Table
         columns={columns}
         dataSource={dataUsers}
+        loading={loading}
         rowKey={"_id"}
         pagination={{
           current: current,

@@ -1,8 +1,8 @@
 import { fetchAllBookAPI } from "../services/api.service";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import BookTable from "../components/book/book.Table";
-// import BookFormControlled from "../components/book/book.Form.Controlled";
 import BookFormUnControlled from "../components/book/book.Form.Uncontrolled";
+// import BookFormControlled from "../components/book/book.Form.Controlled";
 
 function BookPage() {
   const [dataBooks, setDataBooks] = useState([]);
@@ -11,27 +11,31 @@ function BookPage() {
   const [total, setTotal] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataForm, setDataForm] = useState(null);
-
-
-  useEffect(() => {
-    loadBook();
-  }, [current, pageSize]);
-
-  const loadBook = async () => {
+  const [loading, setLoading] = useState(false);
+  
+  const loadBook = useCallback(async () => {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 150));
     const res = await fetchAllBookAPI(current, pageSize);
     if (res.data) {
       setDataBooks(res.data.result);
       setCurrent(res.data.meta.current);
       setPageSize(res.data.meta.pageSize);
       setTotal(res.data.meta.total);
+      setLoading(false)
     }
-  };
+  }, [current, pageSize]);
+
+  useEffect(() => {
+    loadBook();
+  }, [loadBook]);
 
   return (
     <div style={{ padding: "20px" }}>
       <BookTable
         loadBook={loadBook}
         dataBooks={dataBooks}
+        loading={loading}
         current={current}
         pageSize={pageSize}
         total={total}
@@ -51,6 +55,8 @@ function BookPage() {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         loadBook={loadBook}
+        setLoading={setLoading}
+        loading={loading}
         dataForm={dataForm}
         setDataForm={setDataForm}
       />

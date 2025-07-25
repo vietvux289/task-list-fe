@@ -24,6 +24,7 @@ const BookFormAdvance = (props) => {
     isModalOpen,
     setIsModalOpen,
     setDataBookForm,
+    loading
   } = props;
 
   useEffect(() => {

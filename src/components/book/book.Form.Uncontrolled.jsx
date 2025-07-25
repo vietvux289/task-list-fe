@@ -7,9 +7,11 @@ const BookFormUnControlled = (props) => {
   const [form] = Form.useForm();
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const { isModalOpen, setIsModalOpen, loadBook } = props;
+  const { isModalOpen, setIsModalOpen, loadBook, loading, setLoading } = props;
 
   const onFinish = async (values) => {
+    setLoading(true)
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     if (!selectedFile) {
       notification.error({
         message: "Failed to create book",
@@ -42,6 +44,7 @@ const BookFormUnControlled = (props) => {
         description: JSON.stringify(res.message),
       });
     }
+    setLoading(false)
   };
 
   const resetAndCloseModal = () => {
@@ -71,6 +74,7 @@ const BookFormUnControlled = (props) => {
       title="Create new book"
       open={isModalOpen}
       onOk={() => form.submit()}
+      okButtonProps={{ loading: loading }}
       onCancel={() => resetAndCloseModal()}
       maskClosable={false}
       okText={"Create"}

@@ -7,16 +7,22 @@ const BookUpdateUnControlled = (props) => {
   const [form] = Form.useForm();
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const { dataUpdate, setDataUpdate, isModalUpdateOpen, setIsModalUpdateOpen, loadBook } = props;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    dataUpdate,
+    setDataUpdate,
+    isModalUpdateOpen,
+    setIsModalUpdateOpen,
+    loadBook,
+  } = props;
 
     useEffect(() => {
      const imgPreview = `${import.meta.env.VITE_BACKEND_URL}/images/book/${dataUpdate?.thumbnail}`;
         if (dataUpdate) {
-            form.setFieldsValue({ ...dataUpdate }), setPreview(imgPreview);
-
+          form.setFieldsValue({ ...dataUpdate }),
+          setPreview(imgPreview);
       }
-    },
-            [dataUpdate]
+    }, [dataUpdate]
     )
   const onFinish = async (values) => {
     if (!selectedFile) {
@@ -27,6 +33,8 @@ const BookUpdateUnControlled = (props) => {
       return;
     }
 
+    setIsSubmitting(true);
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const resUpload = await handleUploadFile(selectedFile, "book");
 
     if (resUpload.data) {
@@ -51,6 +59,7 @@ const BookUpdateUnControlled = (props) => {
         description: JSON.stringify(res.message),
       });
     }
+    setIsSubmitting(false);
   };
 
   const resetAndCloseModal = () => {
@@ -77,12 +86,13 @@ const BookUpdateUnControlled = (props) => {
 
   return (
     <Modal
-      title="Create new book"
+      title="Update book"
       open={isModalUpdateOpen}
       onOk={() => form.submit()}
+      okButtonProps={{ loading: isSubmitting }}
       onCancel={() => resetAndCloseModal()}
       maskClosable={false}
-    okText={"Update"}
+      okText={"Update"}
     >
       <Form
         form={form}
@@ -91,10 +101,7 @@ const BookUpdateUnControlled = (props) => {
         onFinish={onFinish}
         layout="vertical"
       >
-        <Form.Item
-          name="_id"
-          label="Id"
-        >
+        <Form.Item name="_id" label="Id">
           <Input disabled />
         </Form.Item>
         <Form.Item

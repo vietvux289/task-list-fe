@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/todo.css";
 import TodoNew from "./TodoNew";
 import TodoData from "./TodoData";
-// import reactLogo from "../../assets/react.svg";
 import tasklist from "../../assets/tasklist.jpg";
 
 const TodoApp = () => {
   const [todoList, setTodoList] = useState([]);
+
+  useEffect(() => {
+    const savedTodos = localStorage.getItem("todoList");
+    if (savedTodos) {
+      setTodoList(JSON.parse(savedTodos));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+  }, [todoList]);
 
   const randomIntFromInterval = (min, max) => {
     // min and max included

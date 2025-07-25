@@ -3,8 +3,8 @@ import { Table, Popconfirm, notification, Button } from "antd";
 import { useState } from "react";
 import ViewBookDetail from "./book.View.Detail";
 import { deleteBook } from "../../services/api.service";
-import UpdateBookControlled from "./book.Update.Controlled";
 import BookUpdateUnControlled from "./book.Update.Uncontrolled";
+// import UpdateBookControlled from "./book.Update.Controlled";
 
 const BookTable = (props) => {
   const {
@@ -16,6 +16,7 @@ const BookTable = (props) => {
     setPageSize,
     loadBook,
     setIsModalOpen,
+    loading
   } = props;
 
   const [dataDetail, setDataDetail] = useState(null);
@@ -156,6 +157,7 @@ const BookTable = (props) => {
 
       <Table
         columns={columns}
+        loading={loading}
         dataSource={dataBooks}
         rowKey={"_id"}
         onChange={onChange}
