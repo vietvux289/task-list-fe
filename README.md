@@ -1,20 +1,45 @@
+# 📋 Task List
 
-### Môi trường chạy dự án: Node.js v20.14.0
-https://nodejs.org/download/release/v20.14.0/
+🔗 **Deployed link:** [https://task-list-fe-ten.vercel.app/](https://task-list-fe-ten.vercel.app/)
 
-===
+---
 
-Các bước cài đặt: (chế độ development)
-1. clone code
-2. cài đặt thư viện: npm i
-3. Update file .env.development (nếu cần thiết)
-4. Chạy dự án: npm run dev
+## ⚙️ Environment Requirements
 
-===
+- **Node.js**: v20.14.0  
+  👉 Download: [https://nodejs.org/](https://nodejs.org/)
 
-Cách chạy tại chế độ production:
-1. clone code
-2. cài đặt thư viện: npm i
-3. Update file .env.production (nếu cần thiết)
-4. Build dự án: npm run build
-5. Chạy dự án: npm run preview
+---
+
+## 🚀 Getting Started
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/task-list-fe.git
+
+# 2. Navigate to the project folder
+cd task-list-fe
+
+# 3. Install dependencies
+npm install
+
+# 4. Start the development server
+npm run dev
+```
+
+---
+
+## 📦 Main Libraries Used
+
+- **React**
+- **React Router**
+- **Ant Design**
+- **Axios**
+- **Vite**
+
+---
+
+## 👨‍💻 Author
+
+- Developed by VietVH18
+- Feel free to contribute or open issues!
