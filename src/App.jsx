@@ -18,14 +18,17 @@ const App = () => {
           setUser(res.data.user);
         }
       } catch (error) {
-        message.error("Error fetching user:", error);
+        message.error({
+          content: "Error fetching user: " + error,
+          duration: 1
+        });
       } finally {
         setIsAppLoading(false);
       }
     };
     fetchUser();
   }, []);
-  
+
 
   return (
     <>

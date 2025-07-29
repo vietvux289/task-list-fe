@@ -49,12 +49,10 @@ const Header = () => {
         avatar: "",
         id: "",
       });
-      message.success("Logged out!");
+      message.success("Logged out!", 2);
       navigate("/");
     }
   };
-
-  const selected = mainRoutes.includes(current) ? [current] : [];
 
   const leftMenuItems = [
     {
@@ -87,50 +85,42 @@ const Header = () => {
               label: <span onClick={handleLogOut}>Logout</span>,
             },
           ],
+          style: { marginLeft: "auto" },
         },
       ]
     : [
-        {
-          key: "login",
-          icon: <LoginOutlined />,
-          label: (
-            <NavLink to="/login" style={{ color: "#000000e0" }}>
-              Login
-            </NavLink>
-          ),
-        },
-        {
-          key: "register",
-          icon: <UserAddOutlined />,
-          label: <NavLink to="/register">Register</NavLink>,
-        },
-      ];
+      {
+        key: "register",
+        icon: <UserAddOutlined />,
+        label: <NavLink to="/register">Register</NavLink>,
+        style: { marginLeft: "auto" }, // đẩy cả cụm sang phải
+      },
+      {
+        key: "login",
+        icon: <LoginOutlined />,
+        label: (
+          <NavLink to="/login" style={{ color: "#000000e0" }}>
+            Login
+          </NavLink>
+        ),
+      },
+    ];
+
+  const items = [...leftMenuItems, ...rightMenuItems];
 
   return (
-    <div
+    <Menu
+      onClick={onClick}
+      selectedKeys={[current]}
+      mode="horizontal"
+      items={items}
       style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
         background: "#fff",
-        boxShadow: "0 2px 8px rgba(128, 127, 127, 0.1)"
+        boxShadow: "0 2px 8px rgba(128, 127, 127, 0.1)",
+        borderBottom: "none",
+        display: "flex",
       }}
-    >
-      <Menu
-        onClick={onClick}
-        selectedKeys={selected}
-        mode="horizontal"
-        items={leftMenuItems}
-        style={{ borderBottom: "none" }}
-      />
-      <Menu
-        onClick={onClick}
-        selectedKeys={selected}
-        mode="horizontal"
-        items={rightMenuItems}
-        style={{ borderBottom: "none" }}
-      />
-    </div>
+    />
   );
 };
 
