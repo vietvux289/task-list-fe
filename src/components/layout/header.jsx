@@ -9,17 +9,19 @@ import {
   UserAddOutlined,
   IdcardOutlined,
 } from "@ant-design/icons";
-import { useContext, useState, useEffect  } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/auth.context";
 import { logoutAPI } from "../../services/api.service";
 
 const Header = () => {
   const { user, setUser } = useContext(AuthContext);
   const location = useLocation();
-  const allRoutes = ["users", "books"];
+  const navigate = useNavigate();
+
+  const mainRoutes = ["home", "users", "books", "login", "register"];
   const checkCurrentRoute = (pathname) => {
-    const currentRoute = allRoutes.find((route) => `/${route}` === pathname);
-    return currentRoute || "home";
+    const route = mainRoutes.find((route) => `/${route}` === pathname);
+    return route || "home";
   };
 
   const [current, setCurrent] = useState(() =>
@@ -29,12 +31,11 @@ const Header = () => {
   useEffect(() => {
     setCurrent(checkCurrentRoute(location.pathname));
   }, [location.pathname]);
-  
+
   const onClick = (e) => {
+    if (e.key === "logout") return;
     setCurrent(e.key);
   };
-
-  let navigate = useNavigate();
 
   const handleLogOut = async () => {
     const res = await logoutAPI();
@@ -53,7 +54,9 @@ const Header = () => {
     }
   };
 
-  const menuItems = [
+  const selected = mainRoutes.includes(current) ? [current] : [];
+
+  const leftMenuItems = [
     {
       key: "home",
       icon: <HomeOutlined />,
@@ -69,15 +72,11 @@ const Header = () => {
       icon: <ReadOutlined />,
       label: <NavLink to="/books">Books</NavLink>,
     },
-    {
-      key: "spacer",
-      label: "",
-      disabled: true,
-      style: { flexGrow: 1, cursor: "default" },
-    },
+  ];
 
-    user.id
-      ? {
+  const rightMenuItems = user.id
+    ? [
+        {
           key: "welcome",
           icon: <IdcardOutlined />,
           label: `Welcome ${user.fullName}`,
@@ -85,11 +84,13 @@ const Header = () => {
             {
               key: "logout",
               icon: <LogoutOutlined />,
-              label: <span onClick={() => handleLogOut()}>Logout</span>,
+              label: <span onClick={handleLogOut}>Logout</span>,
             },
           ],
-        }
-      : {
+        },
+      ]
+    : [
+        {
           key: "login",
           icon: <LoginOutlined />,
           label: (
@@ -97,24 +98,39 @@ const Header = () => {
               Login
             </NavLink>
           ),
-          children: [
-            {
-              key: "register",
-              icon: <UserAddOutlined />,
-              label: <NavLink to="/register">Register</NavLink>,
-            },
-          ],
         },
-  ];
+        {
+          key: "register",
+          icon: <UserAddOutlined />,
+          label: <NavLink to="/register">Register</NavLink>,
+        },
+      ];
 
   return (
-    <Menu
-      onClick={onClick}
-      selectedKeys={[current]}
-      mode="horizontal"
-      style={{ display: "flex" }}
-      items={menuItems}
-    />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        background: "#fff",
+        boxShadow: "0 2px 8px rgba(128, 127, 127, 0.1)"
+      }}
+    >
+      <Menu
+        onClick={onClick}
+        selectedKeys={selected}
+        mode="horizontal"
+        items={leftMenuItems}
+        style={{ borderBottom: "none" }}
+      />
+      <Menu
+        onClick={onClick}
+        selectedKeys={selected}
+        mode="horizontal"
+        items={rightMenuItems}
+        style={{ borderBottom: "none" }}
+      />
+    </div>
   );
 };
 

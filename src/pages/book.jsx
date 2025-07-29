@@ -15,7 +15,6 @@ function BookPage() {
   
   const loadBook = useCallback(async () => {
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 150));
     const res = await fetchAllBookAPI(current, pageSize);
     if (res.data) {
       setDataBooks(res.data.result);

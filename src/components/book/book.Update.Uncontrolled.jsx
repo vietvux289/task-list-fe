@@ -34,7 +34,6 @@ const BookUpdateUnControlled = (props) => {
     }
 
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
     const resUpload = await handleUploadFile(selectedFile, "book");
 
     if (resUpload.data) {

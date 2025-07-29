@@ -11,7 +11,6 @@ const BookFormUnControlled = (props) => {
 
   const onFinish = async (values) => {
     setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     if (!selectedFile) {
       notification.error({
         message: "Failed to create book",

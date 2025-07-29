@@ -16,7 +16,6 @@ const UserPage = () => {
 
   const loadUser = async () => {
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 150));
     const res = await fetchAllUserAPI(current, pageSize);
     if (res.data) {
       setDataUsers(res.data.result);
